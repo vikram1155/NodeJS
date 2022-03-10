@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const Blog = require('./models/blog');
@@ -7,20 +8,23 @@ const mongoose = require('mongoose');
 const { render } = require('ejs');
 // express app
 const app = express();
+//port change heroku
+const port = process.env.PORT || 3000;
 
 //Connect to mongodb
 const dbURI = "mongodb+srv://vikram:Vikram1234@cluster0.okhte.mongodb.net/NodeBasics?retryWrites=true&w=majority"
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((result) => {
-  app.listen(3000) || process.env.PORT})
-.catch((err) => console.log(err));
+    .then((result) => {
+        app.listen(port)
+    })
+    .catch((err) => console.log(err));
 
 // register view engine
 app.set('view engine', 'ejs');
 
 // middleware & static files
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 //mongoose and mongo sandbox routes
 // app.get('/add-blog', (req, res) => {
@@ -75,46 +79,46 @@ app.get('/', (req, res) => {
 });
 //get all blogs
 app.get('/all-blogs', (req, res) => {
-  Blog.find().sort({createdAt:1})
-  .then((result) => {
-    res.render('index', {title: 'All - Blogs', blogs: result})
-  }).catch((err) => {
-    console.log(err);
-  });
+    Blog.find().sort({ createdAt: 1 })
+        .then((result) => {
+            res.render('index', { title: 'All - Blogs', blogs: result })
+        }).catch((err) => {
+            console.log(err);
+        });
 })
 
 //post a blog
 app.post('/blogs', (req, res) => {
-  const blog = new Blog(req.body)
-  blog.save()
-  .then((result) => {
-    res.redirect('/all-blogs');
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    const blog = new Blog(req.body)
+    blog.save()
+        .then((result) => {
+            res.redirect('/all-blogs');
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
 
 //get blog by id
 app.get('/all-blogs/:id', (req, res) => {
-  const id = req.params.id;
-  Blog.findById(id)
-  .then(result => {
-    res.render('details', {blog: result, title: "Blog Details" });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    const id = req.params.id;
+    Blog.findById(id)
+        .then(result => {
+            res.render('details', { blog: result, title: "Blog Details" });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 })
 
 //delete blogs
 app.delete('/all-blogs/:id', (req, res) => {
-  const id = req.params.id;
-  Blog.findByIdAndDelete(id)
-  .then(result => {
-    res.json({redirect:'/all=blogs'})
-  })
-  .catch(err => console.log(err));
+    const id = req.params.id;
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            res.json({ redirect: '/all=blogs' })
+        })
+        .catch(err => console.log(err));
 })
 
 
