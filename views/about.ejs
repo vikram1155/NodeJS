@@ -1,0 +1,25 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+    <body>
+        <%- include("./partials/nav.ejs") %>
+
+            <div class="about content">
+                <h1>About BlogPage</h1><br><br>
+                <p>A sample CRUD site to write, store, retrieve blogs(write-ups) using:<br> <br> 1. Node.js (JS framework) <br> 2. Express (Framework - backend) <br> 3. MongoDB (DB - Mongoose) <br><br> Uses partials, views and models for each page, blog
+                    object to store and get data. <br><br> The methods used are, <br><br>1. GET method - View blogs <br>2. POST method - Post blogs <br>3. DELETE - Remove blogs from DB <br><br> The valid Routes are:<br><br> 1. /all-blogs - Display all
+                    blogs created
+                    <br> 2. /all-blogs/:id - Display one blog with that id<br> 3. /blogs/create - Create new blogs<br><br><br>
+
+                </p>
+                <div class="navButtons">
+                    <a href="/all-blogs"><button>View All Blogs</button></a>
+                    <a href="/blogs/create"><button>Create New One!</button></a>
+                </div>
+            </div>
+
+    </body>
+
+    <%- include("./partials/footer.ejs") %>
+
+</html>

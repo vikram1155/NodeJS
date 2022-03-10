@@ -1,0 +1,40 @@
+<html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<%- include("./partials/head.ejs") %>
+
+    <body>
+        <%- include("./partials/nav.ejs") %>
+
+            <div class="blogs content">
+                <h1>All Blogs</h1>
+                <br>
+                <% if (blogs.length > 0) { %>
+                    <% blogs.forEach(blog => { %>
+                        <a href="/all-blogs/<%= blog._id %>">
+
+                            <div class="blog-list">
+                                <h3 class="title">
+                                    <%= blog.title %> <i>- <%= blog.author %></i>
+                                </h3>
+                                <p class="snippet">
+                                    <%= blog.snippet %>
+                                </p><br>
+                            </div>
+                        </a>
+
+                        <% }) %>
+                            <% } else { %>
+                                <p>There are no blogs to display...</p>
+                                <% } %>
+
+                                    <div class="createButton">
+                                        <a href="/blogs/create"><button>Create a blog!</button></a>
+                                    </div>
+            </div>
+
+
+    </body>
+
+    <%- include("./partials/footer.ejs") %>
+
+</html>
